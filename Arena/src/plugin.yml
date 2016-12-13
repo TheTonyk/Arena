@@ -1,0 +1,28 @@
+name: Arena
+version: 0.1
+author: TheTonyk
+description: Minecraft Arena Plugin
+main: com.thetonyk.Arena.Main
+softdepend: [ProtocolLib]
+
+commands:
+    fly:
+        permission: global.flycommand
+    gamemode:
+        permission: global.gamemode
+        aliases: [gm]
+    lag:
+        permission: global.lag
+        aliases: [tps]
+    ping:
+        permission: global.ping
+        aliases: [ms]
+    whitelist:
+        permission: global.whitelist
+        aliases: [wl, wh]
+    clear:
+        permission: global.clear
+    text:
+        permission: global.text
+    arena:
+        permission: arena.arena
