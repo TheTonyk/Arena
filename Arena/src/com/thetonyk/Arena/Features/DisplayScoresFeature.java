@@ -66,7 +66,7 @@ public class DisplayScoresFeature implements Listener {
 		
 		List<Location> received = sents.get(uuid);
 		
-		received.stream().filter(l -> !location.getWorld().equals(l.getWorld()) || location.distance(l) > 140).forEach(l -> sents.get(uuid).remove(l));
+		received.clear();
 		
 		if (DataManager.stats == null) return;
 			
