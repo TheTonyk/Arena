@@ -20,6 +20,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -89,6 +90,18 @@ public class ArenaFeature implements Listener {
 		if (!isArena(uuid)) return;
 				
 		arena.remove(uuid);
+		
+	}
+	
+	@EventHandler(priority = EventPriority.HIGH)
+	public void onConsume(PlayerItemConsumeEvent event) {
+		
+		Player player = event.getPlayer();
+		UUID uuid = player.getUniqueId();
+		
+		if ((!isJoining(uuid) && !isArena(uuid)) || !event.isCancelled()) return;
+		
+		event.setCancelled(false);
 		
 	}
 	
