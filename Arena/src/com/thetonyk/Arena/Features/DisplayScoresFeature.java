@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -50,7 +51,7 @@ public class DisplayScoresFeature implements Listener {
 		received.stream().filter(l -> !location.getWorld().equals(l.getWorld()) || location.distance(l) > 140).forEach(l -> sents.get(uuid).remove(l));
 		
 		if (DataManager.stats == null) return;
-			
+		
 		DataManager.stats.stream().filter(l -> location.getWorld().equals(l.getWorld()) && location.distance(l) <= 140).forEach(l -> spawnStats(l, player));
 		
 	}
@@ -63,14 +64,11 @@ public class DisplayScoresFeature implements Listener {
 		Location location = event.getRespawnLocation();
 		
 		if (!sents.containsKey(uuid)) sents.put(uuid, new ArrayList<>());
-		
-		List<Location> received = sents.get(uuid);
-		
-		received.clear();
+		else sents.get(uuid).clear();
 		
 		if (DataManager.stats == null) return;
 			
-		DataManager.stats.stream().filter(l -> location.getWorld().equals(l.getWorld()) && location.distance(l) <= 140).forEach(l -> spawnStats(l, player));
+		DataManager.stats.stream().filter(l -> location.getWorld().equals(l.getWorld()) && location.distance(l) <= 140).forEach(l -> Bukkit.getScheduler().runTaskLater(Main.plugin, () -> spawnStats(l, player), 1));
 		
 	}
 	
@@ -82,10 +80,7 @@ public class DisplayScoresFeature implements Listener {
 		Location location = player.getLocation();
 		
 		if (!sents.containsKey(uuid)) sents.put(uuid, new ArrayList<>());
-		
-		List<Location> received = sents.get(uuid);
-		
-		received.clear();
+		else sents.clear();
 		
 		if (DataManager.stats == null) return;
 		
@@ -165,7 +160,7 @@ public class DisplayScoresFeature implements Listener {
 	
 	public static void updateBests() throws SQLException {
 		
-		if (DataManager.stats == null) return;
+		if (DataManager.bests == null) return;
 		
 		for (Location location : DataManager.bests) {
 			

@@ -215,7 +215,7 @@ public class ProtectionFeature implements Listener {
 		
 		Location location = world.getSpawnLocation();
 		
-		if (DataManager.spawnspoints == null) {
+		if (DataManager.spawnspoints != null) {
 			
 			List<Location> locations = DataManager.spawnspoints.stream().filter(l -> l.getWorld().equals(world)).collect(Collectors.toList());
 			location = locations.isEmpty() ? world.getSpawnLocation() : locations.get(new Random().nextInt(locations.size()));
