@@ -81,7 +81,7 @@ public class SidebarFeature implements Listener {
 		
 		}
 		
-		Map<String, Integer> scores;
+		Map<String, Double> scores;
 		
 		try {
 			
@@ -89,11 +89,11 @@ public class SidebarFeature implements Listener {
 			
 		} catch (SQLException exception) {return;}
 		
-		String ratio = new DecimalFormat("##.##").format(scores.get("deaths") < 1 ? 0 : (double) scores.get("kills") /  (double) scores.get("deaths"));
+		String ratio = new DecimalFormat("##.##").format(scores.get("deaths") < 1 ? 0 : scores.get("kills") /  scores.get("deaths"));
 		
 		sidebar.getScore("  ").setScore(i);i--;
-		sidebar.getScore("  §7Your kills §8⫸ §a" + scores.get("kills")).setScore(i);i--;
-		sidebar.getScore("  §7Your deaths §8⫸ §a" + scores.get("deaths")).setScore(i);i--;
+		sidebar.getScore("  §7Your kills §8⫸ §a" + scores.get("kills").intValue()).setScore(i);i--;
+		sidebar.getScore("  §7Your deaths §8⫸ §a" + scores.get("deaths").intValue()).setScore(i);i--;
 		sidebar.getScore("  §7Your ratio §8⫸ §a" + ratio).setScore(i);i--;
 		
 	}

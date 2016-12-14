@@ -30,7 +30,7 @@ public class DataManager {
 	public static int y = 0;
 	public static List<Location> stats = null;
 	public static List<Location> bests = null;
-	private static Map<UUID, Map<String, Integer>> scores = new HashMap<>();
+	private static Map<UUID, Map<String, Double>> scores = new HashMap<>();
 	
 	public static Map<String, Integer> best = new LinkedHashMap<>();
 	private static Gson gson = new GsonBuilder().disableHtmlEscaping().create();
@@ -135,13 +135,19 @@ public class DataManager {
 		
 	}
 	
-	public static Map<String, Integer> getScores(UUID uuid) throws SQLException {
+	public static Map<String, Double> getScores(UUID uuid) throws SQLException {
 		
 		if (!scores.containsKey(uuid)) {
 			
-			Map<String, Integer> score = new HashMap<>();
-			score.put("kills", 0);
-			score.put("deaths", 0);
+			Map<String, Double> score = new HashMap<>();
+			score.put("kills", 0d);
+			score.put("deaths", 0d);
+			score.put("killstreak", 0d);
+			score.put("gapple", 0d);
+			score.put("shot", 0d);
+			score.put("hit", 0d);
+			score.put("longshot", -1d);
+			score.put("time", 0d);
 			
 			if (Main.SERVER == null || Main.SERVER.length() < 1) return score;
 			
@@ -153,8 +159,14 @@ public class DataManager {
 				
 				if (query.next()) {
 				
-					score.put("kills", query.getInt("kills"));
-					score.put("deaths", query.getInt("deaths"));
+					score.put("kills", query.getDouble("kills"));
+					score.put("deaths", query.getDouble("deaths"));
+					score.put("killstreak", query.getDouble("killstreak"));
+					score.put("gapple", query.getDouble("gapple"));
+					score.put("shot", query.getDouble("shot"));
+					score.put("hit", query.getDouble("hit"));
+					score.put("longshot", query.getDouble("longshot"));
+					score.put("time", query.getDouble("time"));
 				
 				}
 				
@@ -168,7 +180,39 @@ public class DataManager {
 		
 	}
 	
-	public static void updateScores(UUID uuid, Map<String, Integer> score) throws SQLException {
+	public static Map<UUID, Map<String, Double>> getAllScores() throws SQLException {
+		
+		Map<UUID, Map<String, Double>> scores = new HashMap<>();
+		
+		try (Connection connection = DatabaseManager.getConnection();
+		Statement statement = connection.createStatement();
+		ResultSet query = statement.executeQuery("SELECT * FROM scores WHERE server = '" + Main.SERVER + "';")) {
+			
+			while (query.next()) {
+			
+				UUID uuid = PlayersManager.getUUID(query.getInt("id"));
+				Map<String, Double> score = new HashMap<>();
+				
+				score.put("kills", query.getDouble("kills"));
+				score.put("deaths", query.getDouble("deaths"));
+				score.put("killstreak", query.getDouble("killstreak"));
+				score.put("gapple", query.getDouble("gapple"));
+				score.put("shot", query.getDouble("shot"));
+				score.put("hit", query.getDouble("hit"));
+				score.put("longshot", query.getDouble("longshot"));
+				score.put("time", query.getDouble("time"));
+				
+				scores.put(uuid, score);
+			
+			}
+			
+		}
+		
+		return scores;
+		
+	}
+	
+	public static void updateScores(UUID uuid, Map<String, Double> score) throws SQLException {
 		
 		scores.put(uuid, score);
 		
@@ -178,11 +222,11 @@ public class DataManager {
 		
 		if (DatabaseManager.exist("SELECT * FROM scores  WHERE server = '" + Main.SERVER + "' AND id = " + id + ";")) {
 			
-			DatabaseManager.updateQuery("UPDATE scores SET kills = " + score.get("kills") + ", deaths = " + score.get("deaths") + " WHERE server = '" + Main.SERVER + "' AND id = " + id + ";");
+			DatabaseManager.updateQuery("UPDATE scores SET kills = " + score.get("kills") + ", deaths = " + score.get("deaths") + ", killstreak = " + score.get("killstreak") + ", gapple = " + score.get("gapple") + ", shot = " + score.get("shot") + ", hit = " + score.get("hit") + ", longshot = " + score.get("longshot") + ", time = " + score.get("time") + " WHERE server = '" + Main.SERVER + "' AND id = " + id + ";");
 			
 		} else {
 			
-			DatabaseManager.updateQuery("INSERT INTO scores (`server`, `id`, `kills`, `deaths`) VALUES ('" + Main.SERVER + "', '" + id + "', " + score.get("kills") + ", " + score.get("deaths") + ");");
+			DatabaseManager.updateQuery("INSERT INTO scores (`server`, `id`, `kills`, `deaths`, `killstreak`, `gapple`, `shot`, `hit`, `longshot`, `time`) VALUES ('" + Main.SERVER + "', '" + id + "', " + score.get("kills") + ", " + score.get("deaths") + ", " + score.get("killstreak") + ", " + score.get("gapple") + ", " + score.get("shot") + ", " + score.get("hit") + ", " + score.get("longshot") + ", " + score.get("time") + ");");
 			
 		}
 		

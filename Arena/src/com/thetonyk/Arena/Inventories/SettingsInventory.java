@@ -27,6 +27,7 @@ import com.thetonyk.Arena.Utils.ItemsUtils;
 public class SettingsInventory implements Listener {
 
 	public static Map<UUID, SettingsInventory> inventories = new HashMap<>();
+	private int cooldown = 0;
 	private Inventory inventory;
 	private UUID player;
 	
@@ -99,7 +100,7 @@ public class SettingsInventory implements Listener {
 		ItemStack item = ItemsUtils.createItem(Material.EYE_OF_ENDER, "§8⫸ §7Player visibility§8: " + (settings.getPlayers() ? "§aEnabled" : "§cDisabled") + " §8⫷", 1, 0, lore);
 		if (settings.getPlayers()) item = ItemsUtils.setGlowing(item);
 		item = ItemsUtils.hideFlags(item);
-		inventory.setItem(10, item);
+		inventory.setItem(11, item);
 		
 		lore.clear();
 		
@@ -125,7 +126,7 @@ public class SettingsInventory implements Listener {
 		item = ItemsUtils.createItem(Material.MAP, "§8⫸ §7Mentions alert§8: " + (settings.getMentions() ? "§aEnabled" : "§cDisabled") + " §8⫷", 1, 0, lore);
 		if (settings.getMentions()) item = ItemsUtils.setGlowing(item);
 		item = ItemsUtils.hideFlags(item);
-		inventory.setItem(14, item);
+		inventory.setItem(13, item);
 		
 		lore.clear();
 		
@@ -140,7 +141,19 @@ public class SettingsInventory implements Listener {
 		item = ItemsUtils.createItem(Material.BOOK_AND_QUILL, "§8⫸ §7Private messages§8: " + (settings.getMessages() ? "§aEnabled" : "§cDisabled") + " §8⫷", 1, 0, lore);
 		if (settings.getMessages()) item = ItemsUtils.setGlowing(item);
 		item = ItemsUtils.hideFlags(item);
-		inventory.setItem(16, item);
+		inventory.setItem(14, item);
+		
+		lore.clear();
+		
+		lore.add("");
+		lore.add("   §7Toggle the visibility of   ");
+		lore.add("   §7your stats in §6/stats§7.   ");
+		lore.add("");
+		
+		item = ItemsUtils.createItem(Material.SIGN, "§8⫸ §7Stats Visibility§8: " + (settings.getStats() ? "§aEnabled" : "§cDisabled") + " §8⫷", 1, 0, lore);
+		if (settings.getMessages()) item = ItemsUtils.setGlowing(item);
+		item = ItemsUtils.hideFlags(item);
+		inventory.setItem(15, item);
 		
 	}
 	
@@ -160,6 +173,7 @@ public class SettingsInventory implements Listener {
 			if (!player.getUniqueId().equals(this.player)) return;
 			if (inventory == null || !inventory.equals(this.inventory)) return;
 			if (item == null || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName()) return;
+			if (cooldown > 3) return;
 			
 			String name = item.getItemMeta().getDisplayName();
 			
@@ -179,11 +193,17 @@ public class SettingsInventory implements Listener {
 			} else if (name.startsWith("§8⫸ §7Private messages")) {
 				
 				settings.setMessages(!settings.getMessages());
+			
+			} else if (name.startsWith("§8⫸ §7Stats Visibility")) {
 				
+				settings.setStats(!settings.getStats());
+			
 			} else return;
 			
 			player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1, 1);
 			update();
+			cooldown++;
+			Bukkit.getScheduler().runTaskLater(Main.plugin, () -> cooldown--, 20);
 		
 		} catch (SQLException exception) {return;}
 		

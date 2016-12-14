@@ -26,3 +26,10 @@ commands:
         permission: global.text
     arena:
         permission: arena.arena
+    stats:
+        permission: arena.stats
+    leaderboards:
+        permission: arena.leaderboards
+        aliases: [top, leaderboard]
+    report:
+        permission: arena.report

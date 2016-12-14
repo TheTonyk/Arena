@@ -34,6 +34,9 @@ public class PermissionsManager {
 		permission.setPermission("minecraft.command.tell", false);
 		permission.setPermission("global.lag", true);
 		permission.setPermission("global.ping", true);
+		permission.setPermission("arena.stats", true);
+		permission.setPermission("arena.leaderboards", true);
+		permission.setPermission("arena.report", true);
 		
 		if (rank == Rank.PLAYER) return;
 		

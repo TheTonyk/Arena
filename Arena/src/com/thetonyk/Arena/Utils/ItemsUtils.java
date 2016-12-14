@@ -7,6 +7,7 @@ import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import net.minecraft.server.v1_8_R3.NBTTagList;
@@ -36,6 +37,21 @@ public class ItemsUtils {
 	public static ItemStack createItem(Material material, String name, int number) {
 		
 		return createItem(material, name, number, 0, null);
+		
+	}
+	
+	public static ItemStack createItem(Material material, String name, int number, int damage, List<String> lore, String player) {
+		
+		ItemStack item = new ItemStack(material, number, (short) damage);
+		SkullMeta meta = (SkullMeta) item.getItemMeta();
+		meta.setDisplayName(name);
+		meta.setOwner(player);
+		
+		if (lore != null) meta.setLore(lore);
+		
+		item.setItemMeta(meta);
+		
+		return item;
 		
 	}
 	

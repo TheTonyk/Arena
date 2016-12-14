@@ -202,9 +202,10 @@ public class ArenaFeature implements Listener {
 		
 		try {
 			
-			Map<String, Integer> scores = DataManager.getScores(player.getUniqueId());
+			Map<String, Double> scores = DataManager.getScores(player.getUniqueId());
 			
-			scores.put("deaths", scores.get("deaths") + 1);
+			scores.put("deaths", scores.get("deaths") + 1d);
+			if (scores.get("killstreak") < player.getLevel()) scores.put("killstreak", Double.valueOf(player.getLevel()));
 			DataManager.updateScores(player.getUniqueId(), scores);
 			
 		} catch (SQLException exception) {
@@ -224,9 +225,9 @@ public class ArenaFeature implements Listener {
 		
 		try {
 			
-			Map<String, Integer> scores = DataManager.getScores(killer.getUniqueId());
+			Map<String, Double> scores = DataManager.getScores(killer.getUniqueId());
 			
-			scores.put("kills", scores.get("kills") + 1);
+			scores.put("kills", scores.get("kills") + 1d);
 			DataManager.updateScores(killer.getUniqueId(), scores);
 			
 			if (!DataManager.best.isEmpty() && scores.get("kills") >= DataManager.best.values().stream().mapToInt(Integer::intValue).min().getAsInt()) {

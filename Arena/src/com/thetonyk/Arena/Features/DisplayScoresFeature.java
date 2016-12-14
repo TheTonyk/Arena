@@ -96,7 +96,7 @@ public class DisplayScoresFeature implements Listener {
 		
 		received.add(location);
 		
-		Map<String, Integer> scores;
+		Map<String, Double> scores;
 		
 		try {
 			
@@ -104,11 +104,11 @@ public class DisplayScoresFeature implements Listener {
 			
 		} catch (SQLException exception) {return;}
 		
-		String ratio = new DecimalFormat("##.##").format(scores.get("deaths") < 1 ? 0 : (double) scores.get("kills") /  (double) scores.get("deaths"));
+		String ratio = new DecimalFormat("##.##").format(scores.get("deaths") < 1 ? 0 : scores.get("kills") /  scores.get("deaths"));
 		
 		sendTitle(location.clone().add(0, 1.25, 0), player, "§8⫸ §6Your Stats §8⫷");
-		sendTitle(location.clone().add(0, 1, 0), player, "§7Your kills §8⫸ §a" + scores.get("kills"));
-		sendTitle(location.clone().add(0, 0.75, 0), player, "§7Your deaths §8⫸ §a" + scores.get("deaths"));
+		sendTitle(location.clone().add(0, 1, 0), player, "§7Your kills §8⫸ §a" + scores.get("kills").intValue());
+		sendTitle(location.clone().add(0, 0.75, 0), player, "§7Your deaths §8⫸ §a" + scores.get("deaths").intValue());
 		sendTitle(location.clone().add(0, 0.5, 0), player, "§7Your ratio §8⫸ §a" + ratio);
 		
 	}

@@ -23,6 +23,7 @@ import com.google.common.collect.Lists;
 import com.thetonyk.Arena.Features.HealthScore;
 import com.thetonyk.Arena.Features.SidebarFeature;
 import com.thetonyk.Arena.Features.TablistFeature;
+import com.thetonyk.Arena.Inventories.LeaderboardsInventory;
 import com.thetonyk.Arena.Managers.ConnectionsAverager;
 import com.thetonyk.Arena.Managers.DataManager;
 import com.thetonyk.Arena.Managers.DatabaseManager;
@@ -77,7 +78,7 @@ public class Main extends JavaPlugin {
 		
 		try {
 			
-			Iterator<Class<?>> classes = getClasses(Lists.newArrayList("Settings", "SettingsInventory")).iterator();
+			Iterator<Class<?>> classes = getClasses(Lists.newArrayList("Settings", "SettingsInventory", "StatsInventory")).iterator();
 			
 			while (classes.hasNext()) {
 				
@@ -119,6 +120,7 @@ public class Main extends JavaPlugin {
 		ConnectionsAverager.setup();
 		DataManager.setup();
 		HealthScore.setup();
+		LeaderboardsInventory.setup();
 		MessengerListener.setup();
 		SidebarFeature.setup();
 		TablistFeature.setup();
