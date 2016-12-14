@@ -213,7 +213,7 @@ public class LeaderboardsInventory implements Listener {
 				sortByValue(buffer).entrySet().stream().forEach(e -> hit.put(e.getKey(), String.valueOf(e.getValue().intValue())));
 				buffer.clear();
 				
-				scores.entrySet().stream().forEach(e -> buffer.put(e.getKey(), e.getValue().get("shot") < 1 ? 0 : (e.getValue().get("hit") /  e.getValue().get("shot")) * 100));
+				scores.entrySet().stream().filter(e -> e.getValue().get("shot") >= 50).forEach(e -> buffer.put(e.getKey(), e.getValue().get("shot") < 1 ? 0 : (e.getValue().get("hit") /  e.getValue().get("shot")) * 100));
 				LinkedHashMap<UUID, String> accuracy = new LinkedHashMap<>();
 				sortByValue(buffer).entrySet().stream().forEach(e -> accuracy.put(e.getKey(), new DecimalFormat("##.##").format(e.getValue().intValue()) + "§7%"));
 				buffer.clear();
@@ -241,7 +241,7 @@ public class LeaderboardsInventory implements Listener {
 					inventory.setItem(19, getItem(killstreak, "Best Killstreak"));
 					inventory.setItem(21, getItem(shot, "Arrows Shot"));
 					inventory.setItem(23, getItem(hit, "Arrows Hits"));
-					inventory.setItem(25, getItem(accuracy, "Bow Accuracy"));
+					inventory.setItem(25, getItem(accuracy, "Bow Accuracy", Lists.newArrayList("§8(§7Min §650 §7arrows shot§8)")));
 					inventory.setItem(29, getItem(longshot, "Longest Shot"));
 					inventory.setItem(31, getItem(gapple, "Golden Apples eaten"));
 					inventory.setItem(33, getItem(time, "Time played"));

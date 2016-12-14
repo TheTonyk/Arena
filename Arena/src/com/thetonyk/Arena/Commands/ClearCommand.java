@@ -14,6 +14,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import com.thetonyk.Arena.Main;
+import com.thetonyk.Arena.Managers.PlayersManager;
 
 public class ClearCommand implements CommandExecutor, TabCompleter {
 
@@ -45,7 +46,7 @@ public class ClearCommand implements CommandExecutor, TabCompleter {
 			
 		}
 		
-		player.getInventory().clear();
+		PlayersManager.clearPlayer(player);
 		
 		if (!player.getName().equalsIgnoreCase(sender.getName())) sender.sendMessage(Main.PREFIX + "The inventory of player '§a" + player.getName() + "§7' has been cleared.");
 		
