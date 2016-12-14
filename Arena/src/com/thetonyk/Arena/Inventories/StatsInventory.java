@@ -11,12 +11,9 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -24,6 +21,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.thetonyk.Arena.Main;
 import com.thetonyk.Arena.Features.StatsFeature;
 import com.thetonyk.Arena.Managers.DataManager;
+import com.thetonyk.Arena.Managers.PlayersManager;
 import com.thetonyk.Arena.Utils.DateUtils;
 import com.thetonyk.Arena.Utils.ItemsUtils;
 
@@ -33,14 +31,14 @@ public class StatsInventory implements Listener {
 	private Inventory inventory;
 	private UUID player;
 	
-	public StatsInventory(Player player) {
+	public StatsInventory(UUID player) throws SQLException {
 		
-		this.inventory = Bukkit.createInventory(null, 27, "§8⫸ §4Stats§8: §7" + player.getName());
-		this.player = player.getUniqueId();
+		this.inventory = Bukkit.createInventory(null, 27, "§8⫸ §4Stats§8: §7" + PlayersManager.getField(player, "name"));
+		this.player = player;
 		
 		addGlasses();
 		update();
-		inventories.put(player.getUniqueId(), this);
+		inventories.put(player, this);
 		
 		Bukkit.getPluginManager().registerEvents(this, Main.plugin);
 		
@@ -58,9 +56,9 @@ public class StatsInventory implements Listener {
 		
 	}
 	
-	public static StatsInventory getInventory(Player player) {
+	public static StatsInventory getInventory(UUID player) throws SQLException {
 		
-		if (inventories.containsKey(player.getUniqueId())) return inventories.get(player.getUniqueId());
+		if (inventories.containsKey(player)) return inventories.get(player);
 		
 		return new StatsInventory(player);
 		
@@ -139,23 +137,12 @@ public class StatsInventory implements Listener {
 		
 		lore.add("");
 		lore.add("   §7Golden Apples eaten: §a" + scores.get("gapple").intValue() + "   ");
-		lore.add("   §7Time played: §a" + DateUtils.toText(scores.get("time").longValue() + time, true) + "   ");
+		lore.add("   §7Time played: §a" + (scores.get("time").longValue() + time > 0 ? DateUtils.toText(scores.get("time").longValue() + time, true) : "None") + "   ");
 		lore.add("");
 		
 		item = ItemsUtils.createItem(Material.NAME_TAG, "§8⫸ §6Others stats §8⫷", 1, 0, lore);
 		item = ItemsUtils.hideFlags(item);
 		inventory.setItem(15, item);
-		
-	}
-	
-	@EventHandler
-	public void onLeave(PlayerQuitEvent event) {
-		
-		if (!event.getPlayer().getUniqueId().equals(this.player)) return;
-		
-		if (inventories.containsKey(player)) inventories.remove(player);
-		
-		HandlerList.unregisterAll(this);
 		
 	}
 	

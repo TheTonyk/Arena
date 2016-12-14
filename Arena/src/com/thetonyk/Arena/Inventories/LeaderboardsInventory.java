@@ -113,6 +113,8 @@ public class LeaderboardsInventory implements Listener {
 		
 		lore.add("");
 		
+		if (scores.isEmpty()) lore.add("   §7There is no enough stats.   ");
+		
 		while (iterator.hasNext()) {
 			
 			Map.Entry<UUID, String> entry = iterator.next();
@@ -121,6 +123,9 @@ public class LeaderboardsInventory implements Listener {
 			if (j == 1) head = player;
 			
 			lore.add("   §6" + j + " §8⫸ §7" + player + " §8⫸ §a" + entry.getValue() + "   ");
+			
+			if (j >= 10) break;
+			
 			j++;
 			
 		}
@@ -225,7 +230,7 @@ public class LeaderboardsInventory implements Listener {
 				
 				scores.entrySet().stream().forEach(e -> buffer.put(e.getKey(), e.getValue().get("time") + (StatsFeature.joinTime.containsKey(e.getKey()) ? new Date().getTime() - StatsFeature.joinTime.get(e.getKey()) : 0)));
 				LinkedHashMap<UUID, String> time = new LinkedHashMap<>();
-				sortByValue(buffer).entrySet().stream().forEach(e -> time.put(e.getKey(), DateUtils.toText(e.getValue().longValue(), true)));
+				sortByValue(buffer).entrySet().stream().forEach(e -> time.put(e.getKey(), e.getValue().longValue() > 0 ? DateUtils.toText(e.getValue().longValue(), true) : "None"));
 				buffer.clear();
 						
 				try {

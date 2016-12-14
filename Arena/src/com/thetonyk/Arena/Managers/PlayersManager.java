@@ -56,6 +56,20 @@ public class PlayersManager implements Listener {
 		
 	}
 	
+	public static UUID getUUID(String name) throws SQLException {
+		
+		try (Connection connection = DatabaseManager.getConnection();
+		Statement statement = connection.createStatement();
+		ResultSet query = statement.executeQuery("SELECT uuid FROM users WHERE name = '" + name + "';")) {
+			
+			if (!query.next()) return null;
+				
+			return UUID.fromString(query.getString("uuid"));
+			
+		}
+		
+	}
+	
 	public static String getField(UUID uuid, String field) throws SQLException {
 		
 		try (Connection connection = DatabaseManager.getConnection();
