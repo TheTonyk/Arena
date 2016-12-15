@@ -33,3 +33,14 @@ commands:
         aliases: [top, leaderboard]
     report:
         permission: arena.report
+    health:
+        permission: arena.health
+        aliases: [h, life]
+    heal:
+        permission: arena.heal
+    sethealth:
+        permission: arena.sethealth
+    give:
+        permission: arena.give
+    list:
+        permission: arena.list

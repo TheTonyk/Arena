@@ -37,6 +37,8 @@ public class PermissionsManager {
 		permission.setPermission("arena.stats", true);
 		permission.setPermission("arena.leaderboards", true);
 		permission.setPermission("arena.report", true);
+		permission.setPermission("arena.health", true);
+		permission.setPermission("arena.list", true);
 		
 		if (rank == Rank.PLAYER) return;
 		
@@ -71,6 +73,9 @@ public class PermissionsManager {
 		permission.setPermission("global.text", true);
 		permission.setPermission("global.build", true);
 		permission.setPermission("arena.arena", true);
+		permission.setPermission("arena.heal", true);
+		permission.setPermission("arena.sethealth", true);
+		permission.setPermission("arena.give", true);
 		player.setOp(true);
 		
 	}

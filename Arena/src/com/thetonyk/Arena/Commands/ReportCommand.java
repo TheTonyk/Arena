@@ -26,10 +26,11 @@ public class ReportCommand implements CommandExecutor {
 		Player player = (Player) sender;
 		
 		sender.sendMessage(Main.PREFIX + "Report a hacker:");
-		sender.sendMessage("§7If a staff member is online, tell him who is the hacker.");
-		sender.sendMessage("§7Else, try to record and upload the hacker.");
+		sender.sendMessage("§8⫸ §7If a staff member is online, tell him who is the hacker.");
+		sender.sendMessage("§8⫸ §7Else, try to record and upload the hacker.");
 		
-		ComponentBuilder message = new ComponentBuilder("Send us the evidence on Twitter: ").color(ChatColor.GRAY)
+		ComponentBuilder message = new ComponentBuilder("⫸ ").color(ChatColor.DARK_GRAY)
+		.append("Send us the evidence on Twitter: ").color(ChatColor.GRAY)
 		.append(Main.TWITTER).color(ChatColor.AQUA)
 		.event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, 
 				new ComponentBuilder("Click to see our ").color(ChatColor.GRAY)

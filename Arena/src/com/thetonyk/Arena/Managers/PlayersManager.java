@@ -185,6 +185,15 @@ public class PlayersManager implements Listener {
 		
 	}
 	
+	public static void healPlayer(Player player) {
+		
+		player.setHealth(player.getMaxHealth());
+		player.setSaturation(5.0f);
+		player.setExhaustion(0f);
+		player.setFoodLevel(20);
+		
+	}
+	
 	public static void updatePlayers(Player player) throws SQLException {
 		
 		updatePlayers(player, Settings.getSettings(player.getUniqueId()));
