@@ -20,10 +20,21 @@ public class PingCommand implements CommandExecutor, TabCompleter {
 
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		
-		Player player = (Player) sender;
+		Player player;
 		int seconds = 1;
 		
-		if (args.length >= 1) {
+		if (args.length < 1) {
+			
+			if (!(sender instanceof Player)) {
+				
+				sender.sendMessage(Main.PREFIX + "Only player can see their ping.");
+				return true;
+				
+			}
+			
+			player = (Player) sender;
+			
+		} else {
 			
 			player = Bukkit.getPlayer(args[0]);
 			

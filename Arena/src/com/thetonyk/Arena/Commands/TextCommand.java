@@ -13,6 +13,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 
 import com.thetonyk.Arena.Main;
 
@@ -25,6 +26,15 @@ public class TextCommand implements CommandExecutor, TabCompleter {
 	
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		
+		if (!(sender instanceof Player)) {
+			
+			sender.sendMessage(Main.PREFIX + "Only player can spawn text.");
+			return true;
+			
+		}
+		
+		Player player = (Player) sender;
+		
 		if (args.length < 1) {
 			
 			sender.sendMessage(Main.PREFIX + "Usage: /text <remove|text>");
@@ -36,7 +46,7 @@ public class TextCommand implements CommandExecutor, TabCompleter {
 			
 			List<ArmorStand> around = new ArrayList<ArmorStand>();
 			
-			for (Entity entity : Bukkit.getPlayer(sender.getName()).getNearbyEntities(1, 1, 1)) {
+			for (Entity entity : player.getNearbyEntities(1, 1, 1)) {
 				
 				if (!(entity instanceof ArmorStand)) continue;
 				
@@ -119,7 +129,7 @@ public class TextCommand implements CommandExecutor, TabCompleter {
 			
 		}
 		
-		Location location = Bukkit.getPlayer(sender.getName()).getLocation();
+		Location location = player.getLocation();
 		ArmorStand stand = (ArmorStand) Bukkit.getPlayer(sender.getName()).getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
 		String name = text.toString().replaceAll("&", "§").replaceAll("§§", "&").replaceAll("»", "⫸").replaceAll("«", "⫷");
 		

@@ -26,6 +26,13 @@ public class ArenaCommand implements CommandExecutor, TabCompleter {
 
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		
+		if (!(sender instanceof Player)) {
+			
+			sender.sendMessage(Main.PREFIX + "This command can only be used by a player.");
+			return true;
+			
+		}
+		
 		Player player = (Player) sender;
 		World world = player.getWorld();
 		Location location = player.getLocation();
