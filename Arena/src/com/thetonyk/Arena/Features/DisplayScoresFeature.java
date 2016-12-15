@@ -84,7 +84,7 @@ public class DisplayScoresFeature implements Listener {
 		
 		if (DataManager.stats == null) return;
 		
-		DataManager.stats.stream().filter(l -> location.getWorld().equals(l.getWorld()) && location.distance(l) <= 140).forEach(l -> spawnStats(l, player));
+		DataManager.stats.stream().filter(l -> location.getWorld().equals(l.getWorld()) && location.distance(l) <= 140).forEach(l -> Bukkit.getScheduler().runTaskLater(Main.plugin, () -> spawnStats(l, player), 1));
 		
 	}
 	
