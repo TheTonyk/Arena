@@ -78,7 +78,7 @@ public class Main extends JavaPlugin {
 		
 		try {
 			
-			Iterator<Class<?>> classes = getClasses(Lists.newArrayList("Settings", "SettingsInventory", "StatsInventory")).iterator();
+			Iterator<Class<?>> classes = getClasses(Lists.newArrayList("Settings", "SettingsInventory", "StatsInventory", "PlayerInventory")).iterator();
 			
 			while (classes.hasNext()) {
 				

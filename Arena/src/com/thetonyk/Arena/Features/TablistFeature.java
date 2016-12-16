@@ -3,6 +3,7 @@ package com.thetonyk.Arena.Features;
 import java.lang.reflect.Field;
 import java.text.DecimalFormat;
 import java.text.Format;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -31,7 +32,7 @@ public class TablistFeature {
 		int ping = (int) ConnectionsAverager.getPing(player.getUniqueId(), 100);
 		Format format = new DecimalFormat("00.00");
 		String tps = format.format(ConnectionsAverager.getTps(100));
-		int players = Bukkit.getOnlinePlayers().size();
+		int players = Bukkit.getOnlinePlayers().stream().filter(p -> !SpecFeature.isSpectator(p)).collect(Collectors.toList()).size();
 		
 		IChatBaseComponent jsonHeader = ChatSerializer.a("{\"text\":\"\n §7Welcome on the Arena, §6" + name + " §7! \n §b" + Main.TWITTER + "  §7⋯  TS: §acommandspvp.com \n\"}");
 		IChatBaseComponent jsonFooter = ChatSerializer.a("{\"text\":\"\n §7Players: §a" + players + "  §7⋯  Ping: §a" + (ping < 1 ? "Not calculated" : ping + "§7ms") + "  §7⋯  TPS: §a" + tps + " \n\"}");

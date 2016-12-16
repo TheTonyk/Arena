@@ -13,6 +13,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.thetonyk.Arena.Main;
@@ -63,16 +64,18 @@ public class ItemsFeature implements Listener {
 		if (!(event.getWhoClicked() instanceof Player)) return;
 		
 		Player player = (Player) event.getWhoClicked();
+		Inventory inventory = event.getClickedInventory();
 		ItemStack item = event.getCurrentItem();
 	
+		if (inventory == null || !inventory.equals(player.getInventory())) return;
 		if (item == null || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName()) return;
 		
 		String name = item.getItemMeta().getDisplayName();
 		
 		if (name.startsWith("§8⫸ §6§lSettings")) {
 			
-			SettingsInventory inventory = SettingsInventory.getInventory(player);
-			player.openInventory(inventory.getInventory());
+			SettingsInventory settings = SettingsInventory.getInventory(player);
+			player.openInventory(settings.getInventory());
 			player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1, 1);
 			return;
 			
@@ -90,9 +93,9 @@ public class ItemsFeature implements Listener {
 			
 			try {
 			
-				StatsInventory inventory = StatsInventory.getInventory(player.getUniqueId());
+				StatsInventory stats = StatsInventory.getInventory(player.getUniqueId());
 				
-				player.openInventory(inventory.getInventory());
+				player.openInventory(stats.getInventory());
 				player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1, 1);
 				return;
 			

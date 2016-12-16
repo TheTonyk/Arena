@@ -164,7 +164,15 @@ public class SelectorInventory implements Listener {
 			
 		} else if (click == ClickType.RIGHT) {
 			
-			//Open Inventory Player
+			PlayerInventory playerInventory;
+			
+			try {
+			
+				playerInventory = PlayerInventory.getInventory(clicked.getUniqueId());
+			
+			} catch (SQLException exception) {return;}
+			
+			player.openInventory(playerInventory.getInventory());
 			
 		}
 		

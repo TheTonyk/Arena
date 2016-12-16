@@ -20,6 +20,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -29,6 +30,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import com.thetonyk.Arena.Main;
+import com.thetonyk.Arena.Inventories.PlayerInventory;
 import com.thetonyk.Arena.Inventories.SelectorInventory;
 import com.thetonyk.Arena.Managers.PlayersManager;
 import com.thetonyk.Arena.Managers.PermissionsManager.Rank;
@@ -142,6 +144,34 @@ public class SpecFeature implements Listener {
 		
 	}
 	
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	public void onChat(AsyncPlayerChatEvent event) {
+		
+		Player player = event.getPlayer();
+		
+		if (!isSpectator(player)) return;
+		
+		Rank rank;
+		
+		try {
+			
+			rank = PlayersManager.getRank(player.getUniqueId());
+			
+		} catch (SQLException exception) {
+			
+			player.sendMessage(Main.PREFIX + "An error has occured while sending your message.");
+			event.setCancelled(true);
+			return;
+			
+		}
+		
+		if (rank == Rank.ADMIN) return;
+		
+		player.sendMessage(Main.PREFIX + "You can't talk in the chat whe  you are in spec mode.");
+		event.setCancelled(true);
+		
+	}
+	
 	@EventHandler
 	public void onLeftClick(PlayerInteractEvent event) {
 		
@@ -189,7 +219,15 @@ public class SpecFeature implements Listener {
 		
 		if (!isSpectator(player) || isSpectator(clicked)) return;
 		
-		//Open Inventory
+		PlayerInventory playerInventory;
+		
+		try {
+		
+			playerInventory = PlayerInventory.getInventory(clicked.getUniqueId());
+		
+		} catch (SQLException exception) {return;}
+		
+		player.openInventory(playerInventory.getInventory());
 		
 	}
 	

@@ -276,7 +276,7 @@ public class PlayersManager implements Listener {
 			
 			if (player.isDead()) player.spigot().respawn();
 			
-			Title title = new Title("§9" + Main.NAME, "§7Welcome on the Arena §7⋯ §a" + Bukkit.getOnlinePlayers().size() + " §7players", 0, 60, 10);
+			Title title = new Title("§9" + Main.NAME, "§7Welcome on the Arena §7⋯ §a" + Bukkit.getOnlinePlayers().stream().filter(p -> !SpecFeature.isSpectator(p)).collect(Collectors.toList()).size() + " §7players", 0, 60, 10);
 			Location location = world.getSpawnLocation();
 			
 			if (DataManager.spawnspoints != null) {

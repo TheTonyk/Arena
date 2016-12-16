@@ -105,10 +105,10 @@ public class StatsInventory implements Listener {
 		String ratio = new DecimalFormat("##.##").format(scores.get("deaths") < 1 ? 0 : scores.get("kills") /  scores.get("deaths"));
 		
 		lore.add("");
-		lore.add("   §7Kills: §a" + scores.get("kills").intValue() + "   ");
-		lore.add("   §7Deaths: §a" + scores.get("deaths").intValue() + "   ");
-		lore.add("   §7Ratio: §a" + ratio + "   ");
-		lore.add("   §7Best Killsteak: §a" + scores.get("killstreak").intValue() + "   ");
+		lore.add("   §7Kills: §6" + scores.get("kills").intValue() + "   ");
+		lore.add("   §7Deaths: §6" + scores.get("deaths").intValue() + "   ");
+		lore.add("   §7Ratio: §6" + ratio + "   ");
+		lore.add("   §7Best Killsteak: §6" + scores.get("killstreak").intValue() + "   ");
 		lore.add("");
 		
 		ItemStack item = ItemsUtils.createItem(Material.IRON_SWORD, "§8⫸ §6PVP Stats §8⫷", 1, 0, lore);
@@ -118,13 +118,13 @@ public class StatsInventory implements Listener {
 		lore.clear();
 		
 		String accuracy = new DecimalFormat("##.##").format(scores.get("shot") < 1 ? 0 : (scores.get("hit") /  scores.get("shot")) * 100);
-		String longshot = new DecimalFormat("##.##").format(scores.get("longshot"));
+		String longshot = scores.get("longshot") > 0 ? new DecimalFormat("##.##").format(scores.get("longshot")) : "None";
 		
 		lore.add("");
-		lore.add("   §7Arrows Shot: §a" + scores.get("shot").intValue() + "   ");
-		lore.add("   §7Arrows Hits: §a" + scores.get("hit").intValue() + "   ");
-		lore.add("   §7Bow Accuracy: §a" + accuracy + "§7%   ");
-		lore.add("   §7Longest Shot: §a" + longshot + "§7m   ");
+		lore.add("   §7Arrows Shot: §6" + scores.get("shot").intValue() + "   ");
+		lore.add("   §7Arrows Hits: §6" + scores.get("hit").intValue() + "   ");
+		lore.add("   §7Bow Accuracy: §6" + accuracy + "§7%   ");
+		lore.add("   §7Longest Shot: §6" + longshot + "§7m   ");
 		lore.add("");
 		
 		item = ItemsUtils.createItem(Material.BOW, "§8⫸ §6Bow Stats §8⫷", 1, 0, lore);
@@ -136,8 +136,8 @@ public class StatsInventory implements Listener {
 		long time = StatsFeature.joinTime.containsKey(this.player) ? new Date().getTime() - StatsFeature.joinTime.get(this.player) : 0;
 		
 		lore.add("");
-		lore.add("   §7Golden Apples eaten: §a" + scores.get("gapple").intValue() + "   ");
-		lore.add("   §7Time played: §a" + (scores.get("time").longValue() + time > 0 ? DateUtils.toText(scores.get("time").longValue() + time, true) : "None") + "   ");
+		lore.add("   §7Golden Apples eaten: §6" + scores.get("gapple").intValue() + "   ");
+		lore.add("   §7Time played: §6" + (scores.get("time").longValue() + time > 0 ? DateUtils.toText(scores.get("time").longValue() + time, true) : "None") + "   ");
 		lore.add("");
 		
 		item = ItemsUtils.createItem(Material.NAME_TAG, "§8⫸ §6Others stats §8⫷", 1, 0, lore);
