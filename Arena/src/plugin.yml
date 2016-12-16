@@ -47,3 +47,6 @@ commands:
     spectate:
         permission: arena.spectate
         aliases: [spec]
+    effect:
+        permission: arena.effect
+        aliases: [effects]

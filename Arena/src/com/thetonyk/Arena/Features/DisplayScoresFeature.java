@@ -198,6 +198,7 @@ public class DisplayScoresFeature implements Listener {
 		title.setGravity(false);
 		title.setCustomName(text);
 		title.setCustomNameVisible(true);
+		title.setRemoveWhenFarAway(false);
 		return;
 				
 	}

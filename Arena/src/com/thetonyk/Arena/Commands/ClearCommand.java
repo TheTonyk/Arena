@@ -35,6 +35,14 @@ public class ClearCommand implements CommandExecutor, TabCompleter {
 		
 		} else {
 			
+			if (args[0].equalsIgnoreCase("*")) {
+				
+				Bukkit.getOnlinePlayers().stream().forEach(p -> PlayersManager.clearPlayer(p));
+				Bukkit.broadcastMessage(Main.PREFIX + "All players inventory has been cleared.");
+				return true;
+				
+			}
+			
 			player = Bukkit.getPlayer(args[0]);
 		
 			if (player == null) {

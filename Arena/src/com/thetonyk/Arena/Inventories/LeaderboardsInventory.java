@@ -118,6 +118,9 @@ public class LeaderboardsInventory implements Listener {
 		while (iterator.hasNext()) {
 			
 			Map.Entry<UUID, String> entry = iterator.next();
+			
+			if (entry.getKey() == null) continue;
+			
 			String player = PlayersManager.getField(entry.getKey(), "name");
 			
 			if (j == 1) head = player;

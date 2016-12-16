@@ -77,6 +77,7 @@ public class PermissionsManager {
 		permission.setPermission("arena.heal", true);
 		permission.setPermission("arena.sethealth", true);
 		permission.setPermission("arena.give", true);
+		permission.setPermission("arena.effect", true);
 		player.setOp(true);
 		
 	}
