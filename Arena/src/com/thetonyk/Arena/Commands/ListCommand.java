@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.thetonyk.Arena.Main;
+import com.thetonyk.Arena.Features.SpecFeature;
 import com.thetonyk.Arena.Managers.PermissionsManager.Rank;
 import com.thetonyk.Arena.Managers.PlayersManager;
 
@@ -28,6 +29,8 @@ public class ListCommand implements CommandExecutor {
 		try {
 		
 			for (Player player : Bukkit.getOnlinePlayers()) {
+				
+				if (SpecFeature.isSpectator(player)) continue;
 				
 				Rank rank = PlayersManager.getRank(player.getUniqueId());
 				int health = (int) (player.getHealth() / 2) * 10;

@@ -194,7 +194,7 @@ public class ArenaFeature implements Listener {
 		
 	}
 	
-	private static void handleDeath(Player player) {
+	public static void handleDeath(Player player) {
 		
 		Player killer = player.getKiller();
 		
@@ -289,6 +289,7 @@ public class ArenaFeature implements Listener {
 		UUID uuid = player.getUniqueId();
 		
 		if (isArena(uuid) || isJoining(uuid)) return;
+		if (SpecFeature.isSpectator(player)) return;
 		if (DataManager.y < 1) return;
 		if (DataManager.y < 1 || event.getTo().getY() > DataManager.y) return;
 		

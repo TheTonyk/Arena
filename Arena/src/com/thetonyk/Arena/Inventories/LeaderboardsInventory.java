@@ -146,7 +146,7 @@ public class LeaderboardsInventory implements Listener {
 		
 		lore.add("");
 		
-		ItemStack item = ItemsUtils.createItem(Material.SKULL_ITEM, "§8⫸ §6" + name + " §8⫷", 1, 3, lore, head);
+		ItemStack item = ItemsUtils.getSkull("§8⫸ §6" + name + " §8⫷", 1, lore, head);
 		item = ItemsUtils.hideFlags(item);
 		return item;
 		

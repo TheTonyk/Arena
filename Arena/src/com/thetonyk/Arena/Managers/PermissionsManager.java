@@ -61,6 +61,7 @@ public class PermissionsManager {
 		permission.unsetPermission("global.build");
 		permission.unsetPermission("global.text");
 		permission.setPermission("global.bypasswhitelist", true);
+		permission.setPermission("arena.spectate", true);
 		
 		if (rank == Rank.MOD) return;
 		

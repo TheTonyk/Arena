@@ -44,3 +44,6 @@ commands:
         permission: arena.give
     list:
         permission: arena.list
+    spectate:
+        permission: arena.spectate
+        aliases: [spec]

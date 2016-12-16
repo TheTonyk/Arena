@@ -33,6 +33,7 @@ import org.github.paperspigot.Title;
 
 import com.thetonyk.Arena.Main;
 import com.thetonyk.Arena.Features.ArenaFeature;
+import com.thetonyk.Arena.Features.SpecFeature;
 import com.thetonyk.Arena.Managers.PermissionsManager.Rank;
 
 import net.minecraft.server.v1_8_R3.EntityPlayer;
@@ -216,10 +217,10 @@ public class PlayersManager implements Listener {
 			
 			Settings onlineSettings = Settings.getSettings(online.getUniqueId());
 			
-			if (!settings.getPlayers() && !online.hasPermission("global.visible") && !ArenaFeature.isArena(online.getUniqueId()) && !ArenaFeature.isJoining(online.getUniqueId())) player.hidePlayer(online);
+			if ((!settings.getPlayers() && !online.hasPermission("global.visible") && !ArenaFeature.isArena(online.getUniqueId()) && !ArenaFeature.isJoining(online.getUniqueId())) || SpecFeature.isSpectator(online)) player.hidePlayer(online);
 			else player.showPlayer(online);
 			
-			if (!onlineSettings.getPlayers() && !player.hasPermission("global.visible") && !ArenaFeature.isArena(player.getUniqueId()) && !ArenaFeature.isJoining(player.getUniqueId())) online.hidePlayer(player);
+			if ((!onlineSettings.getPlayers() && !player.hasPermission("global.visible") && !ArenaFeature.isArena(player.getUniqueId()) && !ArenaFeature.isJoining(player.getUniqueId())) || SpecFeature.isSpectator(player)) online.hidePlayer(player);
 			else online.showPlayer(player);
 			
 		}
