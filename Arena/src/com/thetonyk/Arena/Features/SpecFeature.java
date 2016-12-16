@@ -31,6 +31,7 @@ import org.bukkit.inventory.ItemStack;
 import com.thetonyk.Arena.Main;
 import com.thetonyk.Arena.Inventories.SelectorInventory;
 import com.thetonyk.Arena.Managers.PlayersManager;
+import com.thetonyk.Arena.Managers.PermissionsManager.Rank;
 import com.thetonyk.Arena.Utils.ItemsUtils;
 
 public class SpecFeature implements Listener {
@@ -39,9 +40,13 @@ public class SpecFeature implements Listener {
 	
 	public static void enable(Player player) throws SQLException {
 		
+		Rank rank = PlayersManager.getRank(player.getUniqueId());
+		
 		spectators.add(player.getUniqueId());
 		
 		PlayersManager.updatePlayers(player);
+		
+		Bukkit.broadcastMessage("§7[§c-§7] " + rank.getPrefix() + "§7" + player.getName());
 		
 		ArenaFeature.handleDeath(player);
 		ArenaFeature.removeJoining(player);
@@ -58,11 +63,24 @@ public class SpecFeature implements Listener {
 		
 	}
 	
-	public static void disable(Player player) {
+	public static void disable(Player player) throws SQLException {
+		
+		Rank rank = PlayersManager.getRank(player.getUniqueId());
 		
 		spectators.remove(player.getUniqueId());
 		
-		player.setHealth(0);
+		player.teleport(player.getWorld().getSpawnLocation());
+		
+		PlayersManager.updatePlayers(player);
+		PlayersManager.clearPlayer(player);
+		ItemsFeature.give(player);
+		
+		Bukkit.broadcastMessage("§7[§a+§7] " + rank.getPrefix() + "§7" + player.getName());
+		
+		player.setWalkSpeed(0.6f);
+		player.setGameMode(GameMode.ADVENTURE);
+		
+		if (player.hasPermission("global.fly")) player.setAllowFlight(true);
 		
 	}
 	
@@ -193,7 +211,7 @@ public class SpecFeature implements Listener {
 			
 			World world = player.getWorld();
 			Location location = world.getSpawnLocation();
-			location.add(0, -20, 0);
+			location.add(0, -30, 0);
 			
 			player.teleport(location);
 			

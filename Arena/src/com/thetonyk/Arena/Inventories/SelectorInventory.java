@@ -21,6 +21,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.thetonyk.Arena.Main;
+import com.thetonyk.Arena.Features.SpecFeature;
 import com.thetonyk.Arena.Managers.PlayersManager;
 import com.thetonyk.Arena.Utils.ItemsUtils;
 import com.thetonyk.Arena.Managers.PermissionsManager.Rank;
@@ -42,7 +43,7 @@ public class SelectorInventory implements Listener {
 		
 		for (UUID viewer : viewers.keySet()) {
 			
-			if (Bukkit.getPlayer(viewer) == null || !Bukkit.getPlayer(viewer).getOpenInventory().getTopInventory().equals(viewers.get(viewer))) {
+			if (Bukkit.getPlayer(viewer) == null) {
 				
 				viewers.remove(viewer);
 				
@@ -57,6 +58,8 @@ public class SelectorInventory implements Listener {
 			Map<String, String> players = new HashMap<String, String>();
 			
 			for (Player player : Bukkit.getOnlinePlayers()) {
+				
+				if (SpecFeature.isSpectator(player)) continue;
 				
 				Rank rank;
 				

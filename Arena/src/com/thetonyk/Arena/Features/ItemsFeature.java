@@ -41,7 +41,7 @@ public class ItemsFeature implements Listener {
 		
 	}
 	
-	private static void give(Player player) {
+	public static void give(Player player) {
 		
 		ItemStack item = ItemsUtils.createItem(Material.REDSTONE_COMPARATOR, "§8⫸ §6§lSettings §8(§7Right-Click to open§8) §8⫷", 1);
 		item = ItemsUtils.hideFlags(item);

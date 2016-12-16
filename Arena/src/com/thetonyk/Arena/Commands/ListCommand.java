@@ -1,6 +1,7 @@
 package com.thetonyk.Arena.Commands;
 
 import java.sql.SQLException;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -46,7 +47,7 @@ public class ListCommand implements CommandExecutor {
 			
 		}
 		
-		sender.sendMessage(Main.PREFIX + "§6" + Bukkit.getOnlinePlayers().size() + "§7 online players listed.");
+		sender.sendMessage(Main.PREFIX + "§6" + Bukkit.getOnlinePlayers().stream().filter(p -> !SpecFeature.isSpectator(p)).collect(Collectors.toList()).size() + "§7 online players listed.");
 		return true;
 		
 	}
