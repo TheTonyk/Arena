@@ -37,8 +37,8 @@ public class PermissionsManager {
 		permission.setPermission("arena.stats", true);
 		permission.setPermission("arena.leaderboards", true);
 		permission.setPermission("arena.report", true);
-		permission.setPermission("arena.health", true);
-		permission.setPermission("arena.list", true);
+		permission.setPermission("global.health", true);
+		permission.setPermission("global.list", true);
 		
 		if (rank == Rank.PLAYER) return;
 		
@@ -62,6 +62,7 @@ public class PermissionsManager {
 		permission.unsetPermission("global.text");
 		permission.setPermission("global.bypasswhitelist", true);
 		permission.setPermission("arena.spectate", true);
+		permission.setPermission("global.teleport", true);
 		
 		if (rank == Rank.MOD) return;
 		
@@ -74,11 +75,11 @@ public class PermissionsManager {
 		permission.setPermission("global.text", true);
 		permission.setPermission("global.build", true);
 		permission.setPermission("arena.arena", true);
-		permission.setPermission("arena.heal", true);
-		permission.setPermission("arena.sethealth", true);
-		permission.setPermission("arena.give", true);
-		permission.setPermission("arena.effect", true);
-		player.setOp(true);
+		permission.setPermission("global.heal", true);
+		permission.setPermission("global.sethealth", true);
+		permission.setPermission("global.give", true);
+		permission.setPermission("global.effect", true);
+		permission.setPermission("global.teleportplayers", true);
 		
 	}
 	

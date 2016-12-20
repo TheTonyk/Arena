@@ -203,7 +203,7 @@ public class LeaderboardsInventory implements Listener {
 				
 				scores.entrySet().stream().forEach(e -> buffer.put(e.getKey(), e.getValue().get("killstreak")));
 				LinkedHashMap<UUID, String> killstreak = new LinkedHashMap<>();
-				sortByValue(buffer).entrySet().stream().forEach(e -> killstreak.put(e.getKey(), String.valueOf(e.getValue().intValue())));
+				sortByValue(buffer).entrySet().stream().forEach(e -> killstreak.put(e.getKey(), String.valueOf(e.getValue().doubleValue())));
 				buffer.clear();
 				
 				scores.entrySet().stream().forEach(e -> buffer.put(e.getKey(), e.getValue().get("shot")));

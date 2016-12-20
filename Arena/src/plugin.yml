@@ -34,19 +34,22 @@ commands:
     report:
         permission: arena.report
     health:
-        permission: arena.health
+        permission: global.health
         aliases: [h, life]
     heal:
-        permission: arena.heal
+        permission: global.heal
     sethealth:
-        permission: arena.sethealth
+        permission: global.sethealth
     give:
-        permission: arena.give
+        permission: global.give
     list:
-        permission: arena.list
+        permission: global.list
     spectate:
         permission: arena.spectate
         aliases: [spec]
     effect:
-        permission: arena.effect
+        permission: global.effect
         aliases: [effects]
+    teleport:
+        permission: global.teleport
+        aliases: [tp]
