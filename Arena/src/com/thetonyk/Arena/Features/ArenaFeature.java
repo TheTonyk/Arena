@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -29,6 +30,8 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.github.paperspigot.Title;
@@ -36,6 +39,7 @@ import org.github.paperspigot.Title;
 import com.thetonyk.Arena.Main;
 import com.thetonyk.Arena.Managers.DataManager;
 import com.thetonyk.Arena.Managers.PlayersManager;
+import com.thetonyk.Arena.Utils.ItemsUtils;
 
 public class ArenaFeature implements Listener {
 	
@@ -257,6 +261,48 @@ public class ArenaFeature implements Listener {
 			
 			killer.getInventory().addItem(gapple, arrows);
 			killer.sendMessage(Main.PREFIX + "§6Killsteak§7: §a1 §7golden apple & §a8 §7arrows");
+			
+		}
+		
+		if (killer.getLevel() > 0 && killer.getLevel() == 10) {
+			
+			ItemStack[] armors = new ItemStack[4];
+			
+			armors[0] = ItemsUtils.createItem(Material.LEATHER_BOOTS, "§6Swag Armor", 1);
+			armors[1] = ItemsUtils.createItem(Material.LEATHER_LEGGINGS, "§6Swag Armor", 1);
+			armors[2] = ItemsUtils.createItem(Material.LEATHER_CHESTPLATE, "§6Swag Armor", 1);
+			armors[3] = ItemsUtils.createItem(Material.LEATHER_HELMET, "§6Swag Armor", 1);
+			
+			for (ItemStack armor : armors) {
+				
+				LeatherArmorMeta meta = (LeatherArmorMeta) armor.getItemMeta();
+				meta.setColor(Color.fromRGB(255, 170, 0));
+				armor.setItemMeta(meta);
+				
+				armor.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+				armor.addEnchantment(Enchantment.PROTECTION_PROJECTILE, 2);
+				
+			}
+			
+			killer.getInventory().setArmorContents(armors);
+			killer.sendMessage(Main.PREFIX + "§6Killsteak§7: §aSwag Armor");
+			
+		}
+		
+		if (killer.getLevel() > 0 && killer.getLevel() == 15) {
+			
+			
+			ItemStack potion = ItemsUtils.createItem(Material.POTION, "§cSuper Damage Potion", 2, 16460);
+			PotionMeta meta = (PotionMeta) potion.getItemMeta();
+			meta.addCustomEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 255), true);
+			meta.addCustomEffect(new PotionEffect(PotionEffectType.CONFUSION, 300, 3), true);
+			meta.addCustomEffect(new PotionEffect(PotionEffectType.SLOW, 400, 3), true);
+			meta.addCustomEffect(new PotionEffect(PotionEffectType.WEAKNESS, 400, 3), true);
+			meta.addCustomEffect(new PotionEffect(PotionEffectType.WITHER, 100, 3), true);
+			potion.setItemMeta(meta);
+			
+			killer.getInventory().addItem(potion);
+			killer.sendMessage(Main.PREFIX + "§6Killsteak§7: §a1 §cSuper Damage Potion");
 			
 		}
 		
