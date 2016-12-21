@@ -290,6 +290,7 @@ public class PlayersManager implements Listener {
 			event.setJoinMessage("§7[§a+§7] " + rank.getPrefix() + "§7" + player.getName());
 			player.teleport(location);
 			player.setGameMode(GameMode.ADVENTURE);
+			player.setMaxHealth(20);
 			player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 			updateNametag(player);
 			hideCoords(player);
