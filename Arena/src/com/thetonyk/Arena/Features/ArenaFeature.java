@@ -27,6 +27,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -161,8 +162,10 @@ public class ArenaFeature implements Listener {
 		if (!(event.getWhoClicked() instanceof Player)) return;
 		
 		Player player = (Player) event.getWhoClicked();
+		Inventory inventory = event.getClickedInventory();
 		
 		if (!isArena(player.getUniqueId()) || !event.isCancelled()) return;
+		if (inventory == null || !inventory.equals(player.getInventory())) return;
 		if (event.getSlotType() == SlotType.ARMOR) return;
 		
 		event.setCancelled(false);

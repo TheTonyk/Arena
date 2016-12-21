@@ -14,6 +14,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import com.thetonyk.Arena.Main;
+import com.thetonyk.Arena.Features.SpecFeature;
 import com.thetonyk.Arena.Managers.ConnectionsAverager;
 
 public class PingCommand implements CommandExecutor, TabCompleter {
@@ -38,7 +39,7 @@ public class PingCommand implements CommandExecutor, TabCompleter {
 			
 			player = Bukkit.getPlayer(args[0]);
 			
-			if (player == null) {
+			if (player == null || SpecFeature.isSpectator(player)) {
 				
 				sender.sendMessage(Main.PREFIX + "The player'§a" + args[0] + "§7' is not online.");
 				return true;

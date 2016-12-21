@@ -15,6 +15,7 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import com.thetonyk.Arena.Main;
+import com.thetonyk.Arena.Features.SpecFeature;
 
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 
@@ -35,7 +36,7 @@ public class HealthCommand implements CommandExecutor, TabCompleter {
 			
 			player = Bukkit.getPlayer(args[0]);
 			
-			if (player == null) {
+			if (player == null || SpecFeature.isSpectator(player)) {
 				
 				sender.sendMessage(Main.PREFIX + "The player '§a" + args[0] + "§7' is not online.");
 				return true;
