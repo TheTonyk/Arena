@@ -20,6 +20,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -158,6 +159,7 @@ public class ArenaFeature implements Listener {
 		Player player = (Player) event.getWhoClicked();
 		
 		if (!isArena(player.getUniqueId()) || !event.isCancelled()) return;
+		if (event.getSlotType() == SlotType.ARMOR) return;
 		
 		event.setCancelled(false);
 		

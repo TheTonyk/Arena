@@ -14,12 +14,15 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.thetonyk.Arena.Main;
+import com.thetonyk.Arena.Inventories.StatsInventory;
 import com.thetonyk.Arena.Managers.DataManager;
+import com.thetonyk.Arena.Managers.Settings;
 
 public class StatsFeature implements Listener {
 	
@@ -140,6 +143,39 @@ public class StatsFeature implements Listener {
 		} catch (SQLException exception) {
 			
 			player.sendMessage(Main.PREFIX + "§cUnable to add the hit in your stats.");
+			
+		}
+		
+	}
+	
+	@EventHandler
+	public void onRightClickEntity(PlayerInteractEntityEvent event) {
+		
+		Player player = event.getPlayer();
+		
+		if (SpecFeature.isSpectator(player) || ArenaFeature.isArena(player.getUniqueId()) || ArenaFeature.isJoining(player.getUniqueId())) return;
+		if (!(event.getRightClicked() instanceof Player)) return;
+		
+		Player clicked = (Player) event.getRightClicked();
+		
+		try {
+			
+			Settings settings = Settings.getSettings(clicked.getUniqueId());
+				
+			if (!settings.getStats()) {
+				
+				player.sendMessage(Main.PREFIX + "You are not allowed to see the stats of '§6" + clicked.getName() + "§7'.");
+				return;
+				
+			}
+			
+			StatsInventory inventory = StatsInventory.getInventory(clicked.getUniqueId());
+			
+			player.openInventory(inventory.getInventory());
+		
+		} catch (SQLException exception) {
+			
+			player.sendMessage(Main.PREFIX + "An error has occured. Please try again later.");
 			
 		}
 		
