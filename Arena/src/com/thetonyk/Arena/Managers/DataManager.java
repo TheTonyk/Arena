@@ -77,7 +77,7 @@ public class DataManager {
 				
 				UUID uuid = PlayersManager.getUUID(query.getInt("id"));
 				
-				if (uuid == null) continue;
+				if (uuid == null || PunishmentsManager.isLifetimeBanned(uuid)) continue;
 				
 				String name = PlayersManager.getField(uuid, "name");
 				int kills = query.getInt("kills");
@@ -191,6 +191,9 @@ public class DataManager {
 			while (query.next()) {
 			
 				UUID uuid = PlayersManager.getUUID(query.getInt("id"));
+				
+				if (PunishmentsManager.isLifetimeBanned(uuid)) continue;
+				
 				Map<String, Double> score = new HashMap<>();
 				
 				score.put("kills", query.getDouble("kills"));

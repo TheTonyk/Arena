@@ -18,6 +18,7 @@ import org.bukkit.entity.Player;
 import com.thetonyk.Arena.Main;
 import com.thetonyk.Arena.Inventories.StatsInventory;
 import com.thetonyk.Arena.Managers.PlayersManager;
+import com.thetonyk.Arena.Managers.PunishmentsManager;
 import com.thetonyk.Arena.Managers.Settings;
 
 public class StatsCommand implements CommandExecutor, TabCompleter {
@@ -43,6 +44,13 @@ public class StatsCommand implements CommandExecutor, TabCompleter {
 				if (uuid == null) {
 					
 					sender.sendMessage(Main.PREFIX + "The player '§a" + args[0] + "§7' is not know on the server.");
+					return true;
+					
+				}
+				
+				if (PunishmentsManager.isLifetimeBanned(uuid)) {
+					
+					sender.sendMessage(Main.PREFIX + "The player '§a" + args[0] + "§7' is banned from this server.");
 					return true;
 					
 				}

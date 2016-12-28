@@ -129,9 +129,9 @@ public class PlayerInventory implements Listener {
 		ItemStack itemOnCursor = player.getItemOnCursor();
 		ItemStack[] armors = player.getInventory().getArmorContents();
 		ItemStack[] content = player.getInventory().getContents();
-		int health = (int) (player.getHealth() / 2) * 10; 
-		int maxHealth = (int) (player.getMaxHealth() / 2) * 10; 
-		int absorptionHealth = (int) (nmsPlayer.getAbsorptionHearts() / 2) * 10;
+		int health = (int) ((player.getHealth() / 2) * 10); 
+		int maxHealth = (int) ((player.getMaxHealth() / 2) * 10); 
+		int absorptionHealth = (int) ((nmsPlayer.getAbsorptionHearts() / 2) * 10);
 		int air = player.getRemainingAir();
 		int maxAir = player.getMaximumAir();
 		int food = player.getFoodLevel();

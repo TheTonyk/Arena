@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -88,6 +90,35 @@ public class PlayersManager implements Listener {
 	public static Rank getRank(UUID uuid) throws SQLException {
 		
 		return Rank.valueOf(getField(uuid, "rank"));
+		
+	}
+	
+	public static Map<UUID, Integer> getAlts(UUID uuid) throws SQLException {
+		
+		String[] ips = getField(uuid, "ip").split(";");
+		Map<UUID, Integer> alts = new HashMap<>();
+		
+		for (String ip : ips) {
+			
+			try (Connection connection = DatabaseManager.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet users = statement.executeQuery("SELECT uuid FROM users WHERE ip LIKE '%" + ip + "%';")) {
+				
+				while (users.next()) {
+					
+					UUID userUUID = UUID.fromString(users.getString("uuid"));
+					
+					if (uuid.equals(userUUID)) continue;
+					
+					alts.put(userUUID, alts.containsKey(userUUID) ? alts.get(userUUID) + 1 : 1);
+					
+				}
+				
+			}
+			
+		}
+		
+		return alts;
 		
 	}
 	
