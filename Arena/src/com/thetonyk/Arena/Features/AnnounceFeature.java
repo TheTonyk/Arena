@@ -47,7 +47,9 @@ public class AnnounceFeature {
 	
 	public static void setup() {
 		
-		Bukkit.getScheduler().runTaskTimer(Main.plugin, () -> Bukkit.getOnlinePlayers().stream().forEach(p -> p.spigot().sendMessage(ANNOUNCES.get(new Random().nextInt(ANNOUNCES.size())))), 12000, 12000);
+		BaseComponent[] message = ANNOUNCES.get(new Random().nextInt(ANNOUNCES.size()));
+		
+		Bukkit.getScheduler().runTaskTimer(Main.plugin, () -> Bukkit.getOnlinePlayers().stream().forEach(p -> p.spigot().sendMessage(message)), 12000, 12000);
 		
 	}
 	

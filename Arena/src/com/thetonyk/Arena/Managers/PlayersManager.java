@@ -39,8 +39,6 @@ import com.thetonyk.Arena.Features.SpecFeature;
 import com.thetonyk.Arena.Managers.PermissionsManager.Rank;
 
 import net.minecraft.server.v1_8_R3.EntityPlayer;
-import net.minecraft.server.v1_8_R3.IChatBaseComponent;
-import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityStatus;
 
 public class PlayersManager implements Listener {
@@ -180,16 +178,6 @@ public class PlayersManager implements Listener {
 		
 		EntityPlayer nmsPlayer = ((CraftPlayer) player).getHandle();
 		PacketPlayOutEntityStatus packet = new PacketPlayOutEntityStatus(nmsPlayer, (byte) 23);
-		
-		nmsPlayer.playerConnection.sendPacket(packet);
-		
-	}
-	
-	public static void sendActionBar(Player player, String message) {
-		
-		EntityPlayer nmsPlayer = ((CraftPlayer) player).getHandle();
-		IChatBaseComponent jsonText = IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + message + "\"}");
-		PacketPlayOutChat packet = new PacketPlayOutChat(jsonText, (byte) 2);
 		
 		nmsPlayer.playerConnection.sendPacket(packet);
 		

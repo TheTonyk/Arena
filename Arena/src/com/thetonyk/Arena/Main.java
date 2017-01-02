@@ -20,6 +20,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.common.collect.Lists;
+import com.thetonyk.Arena.Features.ActionBarFeature;
 import com.thetonyk.Arena.Features.AnnounceFeature;
 import com.thetonyk.Arena.Features.HealthScore;
 import com.thetonyk.Arena.Features.SidebarFeature;
@@ -118,6 +119,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", listener);
 		Bukkit.getMessenger().registerIncomingPluginChannel(this, CHANNEL, listener);
 		
+		ActionBarFeature.setup();
 		AnnounceFeature.setup();
 		ConnectionsAverager.setup();
 		DataManager.setup();

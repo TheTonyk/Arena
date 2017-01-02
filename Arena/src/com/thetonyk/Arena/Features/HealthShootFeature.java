@@ -12,7 +12,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.thetonyk.Arena.Main;
-import com.thetonyk.Arena.Managers.PlayersManager;
 
 public class HealthShootFeature implements Listener {
 	
@@ -61,7 +60,7 @@ public class HealthShootFeature implements Listener {
 				
 				text += " §7⫸ §6" + new DecimalFormat("##.#").format(health) + "§7%";
 				
-				PlayersManager.sendActionBar(player, text);
+				ActionBarFeature.sendMessage(player.getUniqueId(), text, 3);
 				
 			}
 			

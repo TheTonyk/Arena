@@ -46,13 +46,13 @@ public class SpecFeature implements Listener {
 		
 		spectators.add(player.getUniqueId());
 		
-		PlayersManager.updatePlayers(player);
-		
-		Bukkit.broadcastMessage("§7[§c-§7] " + rank.getPrefix() + "§7" + player.getName());
-		
 		ArenaFeature.handleDeath(player);
 		ArenaFeature.removeJoining(player);
 		ArenaFeature.removeArena(player);
+		
+		PlayersManager.updatePlayers(player);
+		
+		Bukkit.broadcastMessage("§7[§c-§7] " + rank.getPrefix() + "§7" + player.getName());
 		
 		PlayersManager.clearPlayer(player);
 		PlayersManager.healPlayer(player);

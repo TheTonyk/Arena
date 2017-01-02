@@ -192,6 +192,8 @@ public class ArenaFeature implements Listener {
 		removeJoining(player);
 		removeArena(player);
 		
+		DataManager.updateBests();
+		
 	}
 	
 	@EventHandler
@@ -229,8 +231,8 @@ public class ArenaFeature implements Listener {
 		
 		int health = (int) ((killer.getHealth() / 2) * 10);
 		
-		player.sendMessage(Main.PREFIX + "You were killed by '§a" + killer.getName() + "§7' §8(§6" + health + "§7%§8)");
-		killer.sendMessage(Main.PREFIX + "You killed '§a" + player.getName() + "§7' §8(§6" + health + "§7%§8)");
+		ActionBarFeature.sendMessage(player.getUniqueId(), Main.PREFIX + "You were killed by '§a" + killer.getName() + "§7' §8(§6" + health + "§7%§8)", 3);
+		ActionBarFeature.sendMessage(killer.getUniqueId(), Main.PREFIX + "You killed '§a" + player.getName() + "§7' §8(§6" + health + "§7%§8)", 3);
 		
 		try {
 			
